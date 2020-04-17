@@ -8,11 +8,10 @@ const router = require("./network/routes");
 var app = express();
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
-// app.use(router);
 
 router(app);
 
 app.use("/app", express.static("public"));
 
 app.listen(3000);
-console.log("appilcation listening on port 3000");
+console.log("application listening on port 3000");
