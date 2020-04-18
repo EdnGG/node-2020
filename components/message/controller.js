@@ -21,15 +21,29 @@ function addMessage(user, message) {
 
 function getMessages() {
   return new Promise((resolve, reject) => {
-    if (resolve) {
-      resolve(store.list());
-    } else {
+    if (!resolve) {
       reject("No messages");
+    } else {
+      resolve(store.list());
     }
+  });
+}
+
+function updateMessage(id, message) {
+  return new Promise(async (resolve, reject) => {
+    console.log(` ID: ${id}`);
+    console.log(` Mensaje: ${message}`);
+    if (!id || !message) {
+      reject("Invalid data");
+      return false;
+    }
+    const result = await store.updateText(id, message);
+    resolve(result);
   });
 }
 
 module.exports = {
   addMessage,
   getMessages,
+  updateMessage,
 };

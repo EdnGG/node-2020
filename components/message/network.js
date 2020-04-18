@@ -32,4 +32,16 @@ router.post("/", function (req, res) {
     });
 });
 
+router.patch("/:id", function (req, res) {
+  controller
+    .updateMessage(req.params.id, req.body.message)
+    .then((data) => {
+      response.success(req, res, data, 201);
+    })
+    .catch((e) => {
+      response.error(req, res, "Intern Error", 500, e);
+    });
+  //res.send("ok");
+});
+
 module.exports = router;
