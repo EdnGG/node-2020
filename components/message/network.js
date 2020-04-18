@@ -1,7 +1,7 @@
 const express = require("express");
 const response = require("../../network/response");
 //I modify the line bellow
-const controller = require("../message/controller");
+const controller = require("./controller");
 const router = express.Router();
 
 router.get("/", function (req, res) {

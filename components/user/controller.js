@@ -7,9 +7,14 @@ function addUser(name) {
   const user = {
     name,
   };
-  return store.addUser(user);
+  return store.add(user);
+}
+
+function getUsers() {
+  return store.lists();
 }
 
 module.exports = {
   addUser,
+  getUsers,
 };
