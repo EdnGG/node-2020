@@ -1,7 +1,7 @@
 const express = require("express");
 const response = require("../../network/response");
+//I modify the line bellow
 const controller = require("../message/controller");
-
 const router = express.Router();
 
 router.get("/", function (req, res) {
@@ -46,10 +46,11 @@ router.patch("/:id", function (req, res) {
 });
 
 router.delete("/:id", function (req, res) {
+  console.log(req.params.id);
   controller
-    .deleteMessage(req.paramas.id)
+    .deleteMessage(req.params.id)
     .then(() => {
-      response.success(req, res, `User ${req.params.id} Deleted`, 200);
+      response.success(req, res, `Message ${req.params.id} Deleted`, 200);
     })
     .catch((e) => {
       response.error(req, res, "Internal Error", 500, e);

@@ -56,7 +56,7 @@ function deleteMessage(id) {
         resolve();
       })
       .catch((e) => {
-        reject(`Error: ${e}`);
+        reject(`Error type: ${e}`);
       });
   });
 }

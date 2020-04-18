@@ -1,6 +1,9 @@
 const express = require("express");
 const bodyParser = require("body-parser");
-// const router = require("./components/message/network");
+
+const db = require("./db");
+const url = `mongodb+srv://db_user_chat-node:chat-node4444@cluster0-vpijp.mongodb.net/test?retryWrites=true&w=majority`;
+db(url);
 
 const router = require("./network/routes");
 
