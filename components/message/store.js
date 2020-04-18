@@ -19,25 +19,34 @@ function addMessage(message) {
   myMessage.save();
 }
 
-async function getMessages() {
-  const messages = await Model.find();
+async function getMessages(filterUser) {
+  let filter = {};
+  if (filterUser !== null) {
+    //
+    filter = { user: filterUser };
+  }
+  const messages = await Model.find(filter);
   return messages;
 }
 
-async function updateText(id, message) {
-  const foundMessage = await Model.findOne({
-    id: id,
-  });
+async function updateMessage(id, message) {
+  const foundMessage = await Model.findOne({ _id: id });
 
   foundMessage.message = message;
   const newMessage = await foundMessage.save();
   return newMessage;
 }
 
+function removeMessage(id) {
+  Model.deleteOne({
+    _id: id,
+  });
+}
+
 module.exports = {
   add: addMessage,
   list: getMessages,
+  updateMessage: updateMessage,
+  removeMessage: removeMessage,
   //get : getMessage,
-  updateText: updateText,
-  //delete : deleteMessage
 };

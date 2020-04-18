@@ -19,13 +19,15 @@ function addMessage(user, message) {
   });
 }
 
-function getMessages() {
+function getMessages(filterUser) {
   return new Promise((resolve, reject) => {
-    if (!resolve) {
-      reject("No messages");
-    } else {
-      resolve(store.list());
-    }
+    resolve(store.list(filterUser));
+
+    // if (!resolve) {
+    //   reject("No messages");
+    // } else {
+    //   resolve(store.list());
+    // }
   });
 }
 
@@ -37,8 +39,25 @@ function updateMessage(id, message) {
       reject("Invalid data");
       return false;
     }
-    const result = await store.updateText(id, message);
+    const result = await store.updateMessage(id, message);
     resolve(result);
+  });
+}
+
+function deleteMessage(id) {
+  return new Promise((resolve, reject) => {
+    if (!id) {
+      reject("Invalid ID");
+      return false;
+    }
+    store
+      .remove(id)
+      .then(() => {
+        resolve();
+      })
+      .catch((e) => {
+        reject(`Error: ${e}`);
+      });
   });
 }
 
@@ -46,4 +65,5 @@ module.exports = {
   addMessage,
   getMessages,
   updateMessage,
+  deleteMessage,
 };
