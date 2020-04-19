@@ -5,22 +5,23 @@ function addMessage(message) {
   myMessage.save();
 }
 
-async function getMessages(filterUser) {
-  let filter = {};
-  if (filterUser !== null) {
-    //
-    filter = { user: filterUser };
-  }
-  const messages = await Model.find(filter);
-  return messages;
-}
+async function getMessages(filterChat) {
+  return new Promise((resolve, reject) => {
+    let filter = {};
+    if (filterChat !== null) {
+      filter = { chat: filterChat };
+    }
+    Model.find(filter)
+      .populate("user")
+      .exec((error, populated) => {
+        if (error) {
+          reject(error);
+          return false;
+        }
 
-async function updateMessage(id, message) {
-  const foundMessage = await Model.findOne({ _id: id });
-
-  foundMessage.message = message;
-  const newMessage = await foundMessage.save();
-  return newMessage;
+        resolve(populated);
+      });
+  });
 }
 
 function removeMessage(id) {
@@ -29,10 +30,20 @@ function removeMessage(id) {
   });
 }
 
+async function updateText(id, message) {
+  const foundMessage = await Model.findOne({
+    _id: id,
+  });
+
+  foundMessage.message = message;
+
+  const newMessage = await foundMessage.save();
+  return newMessage;
+}
+
 module.exports = {
   add: addMessage,
   list: getMessages,
-  updateMessage: updateMessage,
+  updateText: updateText,
   remove: removeMessage,
-  //get : getMessage,
 };

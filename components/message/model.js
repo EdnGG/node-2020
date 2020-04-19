@@ -1,18 +1,23 @@
 const mongoose = require("mongoose");
-// Formato que tendra nuestra info en MongoDB
+
 const Schema = mongoose.Schema;
 
 const mySchema = new Schema({
-  user: String,
+  chat: {
+    type: Schema.ObjectId,
+    ref: "Chat",
+  },
+  user: {
+    type: Schema.ObjectId,
+    ref: "User",
+  },
   message: {
     type: String,
-    require: true,
+    required: true,
   },
   date: Date,
+  file: String,
 });
 
-/* MODEL: Este es el squema, todo lo que se creea tenga este schema y se guarde en la DB con este nombre
- */
-
-const model = mongoose.model("Mensaje", mySchema);
+const model = mongoose.model("Message", mySchema);
 module.exports = model;
